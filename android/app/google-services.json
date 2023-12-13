@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "603550822203",
+    "firebase_url": "https://akyol-83b7c.firebaseio.com",
+    "project_id": "akyol-83b7c",
+    "storage_bucket": "akyol-83b7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603550822203:android:bbfdf26650071981d3511e",
+        "android_client_info": {
+          "package_name": "com.example.akyol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603550822203-gr1jfqrisetl6pri4jbpkn7r0v05sejn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.akyol",
+            "certificate_hash": "45a1794696c5c164818d90a911d4b5854316137b"
+          }
+        },
+        {
+          "client_id": "603550822203-vhl12d7q8va5cc0vm32nfb90f9i1mhfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCitRcIhZaom3TjRNVsyyNeBhqNkvNdQTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603550822203-vhl12d7q8va5cc0vm32nfb90f9i1mhfd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603550822203:android:5da4dc5d4d77cec0d3511e",
+        "android_client_info": {
+          "package_name": "com.example.fire_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603550822203-vhl12d7q8va5cc0vm32nfb90f9i1mhfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCitRcIhZaom3TjRNVsyyNeBhqNkvNdQTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603550822203-vhl12d7q8va5cc0vm32nfb90f9i1mhfd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
