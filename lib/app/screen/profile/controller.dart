@@ -33,13 +33,20 @@ class ProfileController extends GetxController {
   Future<void> getProfile() async {
     state.loginCtrl.text = Boxes.boxString.get(Boxes.fcmToken) ?? '';
     state.isGettingData(true);
-    await state.dataBase.collection('Users').doc(state.loginCtrl.text).get().then((value) {
-      debugPrint(' VALUE =========================> ${inspect(value)}');
+    if (state.loginCtrl.text.isNotEmpty) {
+      await state.dataBase.collection('Users').doc(state.loginCtrl.text).get().then((value) {
+        debugPrint(' VALUE =========================> ${inspect(value)}');
+        state.isGettingData(false);
+        state.nameCtrl.text = value['name'] ?? '';
+        state.surnameCtrl.text = value['surname'] ?? '';
+        state.fatherNameCtrl.text = value['fatherName'] ?? '';
+      });
+    } else {
       state.isGettingData(false);
-      state.nameCtrl.text = value['name'] ?? '';
-      state.surnameCtrl.text = value['surname'] ?? '';
-      state.fatherNameCtrl.text = value['fatherName'] ?? '';
-    });
+      state.nameCtrl.text = '';
+      state.surnameCtrl.text = '';
+      state.fatherNameCtrl.text = '';
+    }
   }
 
   @override
