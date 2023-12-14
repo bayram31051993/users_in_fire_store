@@ -26,13 +26,6 @@ class ProfileScreen extends StatelessWidget {
                         key: pc.state.formKey,
                         child: Column(
                           children: [
-                            StyleConstants.formSpacer15H,
-                            MyTextFormField(
-                              controller: pc.state.loginCtrl,
-                              label: 'login',
-                              hintText: 'login',
-                            ),
-                            StyleConstants.formSpacer15H,
                             MyTextFormField(
                               controller: pc.state.nameCtrl,
                               label: 'Имя',

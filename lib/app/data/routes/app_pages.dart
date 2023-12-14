@@ -1,4 +1,3 @@
-import 'package:fire_store/app/screen/profile/screen.dart';
 import 'package:get/get.dart';
 
 import '../../app.dart';

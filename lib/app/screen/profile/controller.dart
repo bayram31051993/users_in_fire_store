@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:fire_store/app/app.dart';
-import 'package:fire_store/app/data/model/profile.dart';
-import 'package:flutter/material.dart';
+import 'package:fire_store/app/data/api/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
@@ -12,40 +10,50 @@ class ProfileController extends GetxController {
     if (!state.formKey.currentState!.validate()) return;
 
     state.isLoading(true);
-
+    String accessToken = Boxes.boxString.get(Boxes.fcmToken) ?? '';
     ProfileModel profile = ProfileModel(
-      name: state.nameCtrl.text,
-      surname: state.surnameCtrl.text,
-      fatherName: state.fatherNameCtrl.text,
-    );
+        name: state.nameCtrl.text,
+        surname: state.surnameCtrl.text,
+        fatherName: state.fatherNameCtrl.text,
+        uId: accessToken);
 
-    await state.dataBase.collection('Users').doc(state.loginCtrl.text).set(profile.toJson()).whenComplete(() {
-      showSnack('success'.tr, 'Пользователь добален успешно');
-      Boxes.boxString.put(Boxes.fcmToken, state.loginCtrl.text);
-      state.isLoading(false);
-    }).catchError((error, trace) {
+    state.firebaseUser = await LoginApi.registerAnonymously(state.firebaseAuth);
+
+    if (state.firebaseUser != null) {
+      await state.dataBase.collection('Users').doc(accessToken).set(profile.toJson()).whenComplete(() {
+        showSnack('success'.tr, 'Пользователь добален успешно');
+
+        state.isLoading(false);
+      });
+    } else {
       showSnack('error'.tr, 'Что-то пошло не так', SnackType.error);
-      state.isLoading(false);
-      debugPrint('$error');
-    });
+    }
+    state.isLoading(false);
   }
 
   Future<void> getProfile() async {
-    state.loginCtrl.text = Boxes.boxString.get(Boxes.fcmToken) ?? '';
-    state.isGettingData(true);
-    if (state.loginCtrl.text.isNotEmpty) {
-      await state.dataBase.collection('Users').doc(state.loginCtrl.text).get().then((value) {
-        debugPrint(' VALUE =========================> ${inspect(value)}');
-        state.isGettingData(false);
-        state.nameCtrl.text = value['name'] ?? '';
-        state.surnameCtrl.text = value['surname'] ?? '';
-        state.fatherNameCtrl.text = value['fatherName'] ?? '';
+    String accessToken = Boxes.boxString.get(Boxes.fcmToken) ?? '';
+
+    if (accessToken.isNotEmpty) {
+      state.isGettingData(true);
+      state.firebaseAuth.signInAnonymously().then((data) {
+        User user = data.user!;
+        if (accessToken == user.uid) {
+          state.dataBase.collection('Users').doc(user.uid).get().then((value) {
+            state.isGettingData(false);
+            state.nameCtrl.text = value['name'] ?? '';
+            state.surnameCtrl.text = value['surname'] ?? '';
+            state.fatherNameCtrl.text = value['fatherName'] ?? '';
+          });
+          state.isGettingData(false);
+        } else {
+          state.isGettingData(false);
+          state.nameCtrl.text = '';
+          state.surnameCtrl.text = '';
+          state.fatherNameCtrl.text = '';
+        }
       });
-    } else {
       state.isGettingData(false);
-      state.nameCtrl.text = '';
-      state.surnameCtrl.text = '';
-      state.fatherNameCtrl.text = '';
     }
   }
 
